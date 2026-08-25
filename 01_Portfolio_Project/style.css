@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins";
+  overflow-x: hidden;
+}
+
+#navbar {
+  background-color: black;
+  color: white;
+  height: 50px;
+}
+
+#navbar header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-inline: 2rem;
+  padding-top: 0.5rem;
+}
+#navbar header nav h1 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+#navbar header nav ul {
+  list-style: none;
+  text-decoration: none;
+  display: flex;
+}
+
+#navbar header nav ul li {
+  margin-left: 1rem;
+  font-size: 12px;
+  cursor: pointer;
+}
+#navbar header nav button {
+  background-color: white;
+  padding-inline: 1rem;
+  padding-block: 0.2rem;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#hero_section {
+  margin-block: 3rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-inline: 5rem;
+}
+
+#hero_section img {
+  width: 600px;
+}
+
+.hero_first_div h1 {
+  font-size: 100px;
+  font-weight: 600;
+  width: fit-content;
+}
+.hero_first_div span {
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.hero_first_div p {
+  max-width: 35rem;
+}
+
+.hero_first_div button {
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+  border-radius: 6px;
+  padding-inline: 2rem;
+  padding-block: 0.5rem;
+  margin-block: 1rem;
+  cursor: pointer;
+}
+
+#project_section {
+  padding-inline: 5rem;
+}
+
+#project_heading {
+  font-size: 40px;
+}
+
+#project_cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 1rem;
+}
+
+.project_card {
+  border: 2px solid gray;
+  padding: 10px;
+  border-radius: 16px;
+}
+
+.project_card img {
+  width: 400px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.project_card h1{
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.project_card p{
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.project_card button{
+    padding-inline: 30px;
+    padding-block: 6px;
+    margin-top:1rem;
+    background-color: black;
+    color: white;
+    border-radius: 8px;
+    border:none;
+    outline:none;
+    cursor: pointer;
+}
+
+
+#footer_section{
+    margin-block: 2rem;
+    padding-inline: 6rem;
+}
+
+footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+footer h2{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+footer ul li{
+    font-size: 12px;
+    font-weight: 400;
+    margin-block:0.7rem;
+}
+
+footer input{
+    padding-inline:1rem;
+    padding-block: 0.7rem;
+    border:2px solid gray;
+    outline:none;
+    border-radius: 8px;
+    margin-block: 1rem;
+}
+
+footer p{
+    font-size: 14px;
+}
