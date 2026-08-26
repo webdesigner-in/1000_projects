@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Calculator</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Lexend", sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+      }
+
+      section {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        padding: 48px 40px;
+        width: 100%;
+        max-width: 480px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+      }
+
+      section:hover {
+        transform: translateY(-5px);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 36px;
+      }
+
+      .header h2 {
+        font-size: 32px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.5px;
+      }
+
+      .header .subtitle {
+        font-size: 14px;
+        color: #888;
+        margin-top: 4px;
+        font-weight: 300;
+        -webkit-text-fill-color: #888;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .input-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .input-wrapper {
+        flex: 1;
+        position: relative;
+      }
+
+      .input-wrapper .icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+        font-size: 14px;
+        font-weight: 300;
+        pointer-events: none;
+      }
+
+      .input-wrapper input {
+        width: 100%;
+        padding: 14px 16px 14px 36px;
+        border: 2px solid #e8ecf1;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 400;
+        color: #333;
+        transition: all 0.3s ease;
+        background: #f8f9fb;
+        outline: none;
+      }
+
+      .input-wrapper input:focus {
+        border-color: #667eea;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      }
+
+      .input-wrapper input::placeholder {
+        color: #bbb;
+        font-weight: 300;
+      }
+
+      .operator-select-wrapper {
+        position: relative;
+        flex: 0 0 72px;
+      }
+
+      .operator-select-wrapper select {
+        width: 100%;
+        padding: 14px 12px;
+        border: 2px solid #e8ecf1;
+        border-radius: 12px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #667eea;
+        background: #f8f9fb;
+        cursor: pointer;
+        appearance: none;
+        transition: all 0.3s ease;
+        outline: none;
+        text-align: center;
+      }
+
+      .operator-select-wrapper select:focus {
+        border-color: #667eea;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      }
+
+      .operator-select-wrapper::after {
+        content: "▼";
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 10px;
+        color: #aaa;
+        pointer-events: none;
+      }
+
+      .calculate-btn {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        letter-spacing: 0.5px;
+        margin-top: 4px;
+      }
+
+      .calculate-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      .calculate-btn:active {
+        transform: translateY(0px);
+      }
+
+      .result-section {
+        margin-top: 32px;
+        padding-top: 28px;
+        border-top: 2px solid #f0f2f5;
+        text-align: center;
+      }
+
+      .result-section .result-label {
+        font-size: 14px;
+        font-weight: 300;
+        color: #888;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .result-section #result {
+        display: inline-block;
+        font-size: 48px;
+        font-weight: 700;
+        color: #333;
+        min-height: 60px;
+        padding: 0 16px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition: all 0.3s ease;
+      }
+
+      .result-section #result.error {
+        -webkit-text-fill-color: #e74c3c;
+        font-size: 20px;
+        font-weight: 500;
+      }
+
+      .result-section #result.placeholder {
+        -webkit-text-fill-color: #ccc;
+        font-weight: 300;
+        font-size: 20px;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 520px) {
+        section {
+          padding: 32px 20px;
+        }
+
+        .header h2 {
+          font-size: 26px;
+        }
+
+        .input-row {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .operator-select-wrapper {
+          flex: 1;
+          width: 100%;
+        }
+
+        .result-section #result {
+          font-size: 36px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        section {
+          padding: 24px 16px;
+        }
+
+        .header h2 {
+          font-size: 22px;
+        }
+
+        .input-wrapper input {
+          padding: 12px 14px 12px 32px;
+          font-size: 14px;
+        }
+
+        .calculate-btn {
+          padding: 14px;
+          font-size: 16px;
+        }
+
+        .result-section #result {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class="header">
+        <h2>Calculator</h2>
+        <p class="subtitle">Perform calculations instantly</p>
+      </div>
+
+      <div class="input-group">
+        <div class="input-row">
+          <div class="input-wrapper">
+            <span class="icon">#</span>
+            <input
+              type="text"
+              placeholder="First number"
+              id="first_value"
+              autofocus
+            />
+          </div>
+          <div class="operator-select-wrapper">
+            <select id="arth_options">
+              <option value="sum">+</option>
+              <option value="sub">−</option>
+              <option value="mul">×</option>
+              <option value="div">÷</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="input-wrapper">
+            <span class="icon">#</span>
+            <input
+              type="text"
+              placeholder="Second number"
+              id="second_value"
+            />
+          </div>
+          <div style="flex: 0 0 72px; visibility: hidden;"></div>
+        </div>
+      </div>
+
+      <button class="calculate-btn" id="calcBtn">Calculate</button>
+
+      <div class="result-section">
+        <p class="result-label">Result</p>
+        <span id="result" class="placeholder">Ready</span>
+      </div>
+    </section>
+
+    <script>
+      const firstValue = document.getElementById("first_value");
+      const secondValue = document.getElementById("second_value");
+      const arthOptions = document.getElementById("arth_options");
+      const calcBtn = document.getElementById("calcBtn");
+      const result = document.getElementById("result");
+
+      // Set default operation
+      let operation = "sum";
+
+      calcBtn.addEventListener("click", (e) => {
+        const a = Number(firstValue.value);
+        const b = Number(secondValue.value);
+
+        // Validate inputs
+        if (firstValue.value.trim() === "" || secondValue.value.trim() === "") {
+          result.className = "error";
+          result.textContent = "⚠️ Please enter both numbers";
+          return;
+        }
+
+        if (isNaN(a) || isNaN(b)) {
+          result.className = "error";
+          result.textContent = "⚠️ Please enter valid numbers";
+          return;
+        }
+
+        let calculationResult;
+        let operationSymbol;
+
+        if (operation === "sum") {
+          calculationResult = a + b;
+          operationSymbol = "+";
+        } else if (operation === "sub") {
+          calculationResult = a - b;
+          operationSymbol = "−";
+        } else if (operation === "mul") {
+          calculationResult = a * b;
+          operationSymbol = "×";
+        } else if (operation === "div") {
+          if (b === 0) {
+            result.className = "error";
+            result.textContent = "⚠️ Cannot divide by zero";
+            return;
+          }
+          calculationResult = a / b;
+          operationSymbol = "÷";
+        }
+
+        // Format result (handle decimals)
+        const formattedResult = Number.isInteger(calculationResult)
+          ? calculationResult.toString()
+          : calculationResult.toFixed(4);
+
+        result.className = "";
+        result.textContent = `${a} ${operationSymbol} ${b} = ${formattedResult}`;
+      });
+
+      arthOptions.addEventListener("change", (e) => {
+        operation = e.target.value;
+        // Reset result placeholder when operation changes
+        if (result.textContent.includes("=") || result.className === "error") {
+          result.className = "placeholder";
+          result.textContent = "Ready";
+        }
+      });
+
+      // Handle Enter key press
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          calcBtn.click();
+        }
+      });
+
+      // Clear error state when user starts typing
+      firstValue.addEventListener("input", () => {
+        if (result.className === "error") {
+          result.className = "placeholder";
+          result.textContent = "Ready";
+        }
+      });
+
+      secondValue.addEventListener("input", () => {
+        if (result.className === "error") {
+          result.className = "placeholder";
+          result.textContent = "Ready";
+        }
+      });
+    </script>
+  </body>
+</html>
